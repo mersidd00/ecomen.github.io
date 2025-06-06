@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة المنتج</title>
+    <link rel="stylesheet" href="style.css">
+     <link href="./output.css" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+</head>
+<body>
+
+    <!-- رأس الصفحة -->
+    <header class="header">
+        <div class="logo-icons">
+            <img src="images/menu.png" alt="قائمة" class="icon">
+            <img src="images/logo.png" alt="لوجو المتجر" class="logo">
+            <div class="icons">
+                <img src="images/search.png" alt="بحث" class="icon">
+                <img src="images/cart.png" alt="سلة" class="icon">
+            </div>
+        </div>
+    </header>
+    <hr>
+
+
+
+    <main class="product-container">
+        <!-- العنوان -->
+        <h1 class="product-title">Essential Oversized Zip Up Hoodie</h1>
+
+        <!-- Main Image Slider -->
+<div class="swiper main-slider">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img src="images/img1.webp" alt="Main Image 1" /></div>
+    <div class="swiper-slide"><img src="images/img2.webp" alt="Main Image 2" /></div>
+    <div class="swiper-slide"><img src="images/img3.webp" alt="Main Image 3" /></div>
+    <div class="swiper-slide"><img src="images/img4.webp" alt="Main Image 3" /></div>
+    <div class="swiper-slide"><img src="images/img5.webp" alt="Main Image 3" /></div>
+  </div>
+</div>
+
+<!-- Thumbnail Slider -->
+<div class="swiper thumb-slider">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img src="images/img1.webp" alt="Thumb 1" /></div>
+    <div class="swiper-slide"><img src="images/img2.webp" alt="Thumb 2" /></div>
+    <div class="swiper-slide"><img src="images/img3.webp" alt="Thumb 3" /></div>
+    <div class="swiper-slide"><img src="images/img4.webp" alt="Thumb 1" /></div>
+    <div class="swiper-slide"><img src="images/img5.webp" alt="Thumb 1" /></div>
+  </div>
+</div>
+
+
+        <!-- السعر -->
+        <div class="price">
+            <span class="old-price">2000 دج</span>
+            <span class="new-price">1500 دج</span>
+        </div>
+
+        <!-- استمارة الطلب-->
+<div class="w-full ">
+  <div class="bg-white p-6 rounded-lg shadow-lg   border border-slate-300">
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-4"> استمارة الطلب</h2>
+
+    <form id="orderForm" >
+        <!-- اسم المستخدم -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-medium mb-2 text-right " for="firstName">الاسم و اللقب</label>
+            <input type="text" id="firstName" placeholder="أدخل اسمك" required name="firstName"
+                   class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right">
+        </div>
+
+        
+
+        <!-- رقم الهاتف -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-medium mb-2 text-right" for="phone">رقم الهاتف</label>
+            <input type="tel" id="phone" placeholder="أدخل رقم هاتفك" required name="phone"
+                   class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right">
+        </div>
+
+        
+        <!-- اختيار الولاية -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-medium mb-2 text-right" for="state">اختر ولايتك</label>
+          <select id="state"  name="state" required
+                  class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
+                  onchange="updatePrice()">
+              <option value="">-- اختر ولايتك --</option>
+          </select>
+      </div>
+         <!-- سعر التوصيل -->
+         <div class="mb-4">
+          <label class="block text-gray-700 font-medium mb-2 text-right">سعر التوصيل</label>
+          <input type="text" id="deliveryPrice" value="0 دج" name="deliveryPrice" 
+                 class="w-full px-4 py-2 border border-slate-300 rounded-lg bg-gray-200 text-center" readonly>
+      </div>
+
+
+        <!-- اختيار الكمية -->
+        <div class="mb-4">
+          <label class="block text-gray-700 font-medium mb-2 text-right">الكمية</label>
+          <div class="flex items-center border border-slate-300 rounded-lg overflow-hidden  w-36">
+              <button type="button" id="decreaseQty" 
+                      class="bg-gray-200 px-4 py-2 hover:bg-gray-300 transition">-</button>
+              <input type="text" id="quantity" value="1" name="quantity"
+                     class="w-16 text-center border-l border-r py-2 outline-none" readonly>
+              <button type="button" id="increaseQty" 
+                      class="bg-gray-200 px-4 py-2 hover:bg-gray-300 transition">+</button>
+          </div>
+      </div>
+
+        <!-- زر الإرسال -->
+        <button type="submit" 
+                class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+            أطلب الأن
+        </button>
+    </form>
+</div>
+
+
+<script>
+  const form = document.getElementById("orderForm");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    fetch("https://mersidd00.app.n8n.cloud/webhook/8df69e01-69eb-4668-a60b-e37df0fb167b", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+    .then(res => {
+      if (res.ok) {
+        window.location.href = "thank-you.html"; // ✅ صفحة الشكر
+      } else {
+        window.location.href = "error.html"; // ❌ صفحة الخطأ
+      }
+    })
+    .catch(err => {
+      window.location.href = "error.html"; // ❌ عند وجود خطأ في الاتصال
+    });
+  });
+</script>
+
+    </main>
+<hr>
+    <!-- التذييل -->
+    <footer class="footer">
+        <img src="images/logo.png" alt="لوجو" class="footer-logo">
+        <p>جميع الحقوق محفوظة لموقع eco men</p>
+        <p>2025</p>
+        <div class="phone">
+            <p>0551201454</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script12.js"></script>
+    
+
+</body>
+</html>
